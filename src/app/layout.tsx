@@ -2,8 +2,16 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { AuthProvider } from "@/components/auth/AuthProvider";
-import { Toaster } from "@/components/ui/toaster";
+import dynamic from "next/dynamic";
+
+const AuthProvider = dynamic(
+    () => import("@/components/auth/AuthProvider").then((m) => m.AuthProvider),
+    { ssr: false }
+);
+const Toaster = dynamic(
+    () => import("@/components/ui/toaster").then((m) => m.Toaster),
+    { ssr: false }
+);
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 

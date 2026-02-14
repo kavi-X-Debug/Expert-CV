@@ -1,7 +1,9 @@
-import { create } from "zustand";
-import { CV, CVData, Experience, Education } from "@/types/cv";
-import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase/config";
+ "use client";
+ 
+ import { create } from "zustand";
+ import { CV, CVData, Experience, Education } from "@/types/cv";
+ import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
+ import { db } from "@/lib/firebase/config";
 
 interface CVStore {
     cv: CV | null;
