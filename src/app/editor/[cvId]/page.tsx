@@ -33,7 +33,14 @@ export default function EditorPage() {
                 const docSnap = await getDoc(docRef);
 
                 if (docSnap.exists()) {
-                    setCV({ id: docSnap.id, ...docSnap.data() } as any);
+                    const data = docSnap.data() as any;
+                    const normalized = {
+                        id: docSnap.id,
+                        userId: user.uid,
+                        theme: data.theme ?? { color: "#2563eb", font: "Helvetica" },
+                        ...data,
+                    };
+                    setCV(normalized as any);
                 } else {
                     console.error("No such CV!");
                     router.push("/dashboard");

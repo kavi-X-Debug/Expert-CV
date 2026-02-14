@@ -23,6 +23,11 @@ export const createCV = async (userId: string, templateId: string = "modern") =>
         const cvData: Partial<CV> = {
             title: "Untitled Resume",
             templateId,
+            userId,
+            theme: {
+                color: "#2563eb",
+                font: "Helvetica",
+            } as any,
             updatedAt: serverTimestamp(),
             createdAt: serverTimestamp(),
             data: {

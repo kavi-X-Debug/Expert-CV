@@ -39,10 +39,11 @@ export const useCVStore = create<CVStore>((set, get) => ({
     setCVTheme: (theme) =>
         set((state) => {
             if (!state.cv) return state;
+            const prevTheme = state.cv.theme ?? { color: "#2563eb", font: "Helvetica" };
             return {
                 cv: {
                     ...state.cv,
-                    theme: { ...state.cv.theme, ...theme }
+                    theme: { ...prevTheme, ...theme }
                 }
             };
         }),

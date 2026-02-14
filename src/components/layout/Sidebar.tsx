@@ -47,21 +47,21 @@ export function Sidebar({ className }: SidebarProps) {
                     </h2>
                     <div className="space-y-1">
                         <Button
-                            variant={pathname === "/profile" ? "secondary" : "ghost"}
+                            variant={pathname === "/dashboard/profile" ? "secondary" : "ghost"}
                             className="w-full justify-start"
                             asChild
                         >
-                            <Link href="/profile">
+                            <Link href="/dashboard/profile">
                                 <User className="mr-2 h-4 w-4" />
                                 Profile
                             </Link>
                         </Button>
                         <Button
-                            variant={pathname === "/settings" ? "secondary" : "ghost"}
+                            variant={pathname === "/dashboard/settings" ? "secondary" : "ghost"}
                             className="w-full justify-start"
                             asChild
                         >
-                            <Link href="/settings">
+                            <Link href="/dashboard/settings">
                                 <Settings className="mr-2 h-4 w-4" />
                                 Settings
                             </Link>
