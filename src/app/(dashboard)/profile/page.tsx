@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Loader2 } from "lucide-react";
+import ProfilePictureUpload from "@/components/profile/ProfilePictureUpload";
 
 export default function ProfilePage() {
     const { user, loading } = useAuth();
@@ -60,15 +61,10 @@ export default function ProfilePage() {
                     <CardDescription>Manage your personal information</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                    <div className="flex items-center gap-4">
-                        <Avatar className="h-16 w-16">
-                            <AvatarImage src={user.photoURL || ""} alt={user.email || ""} />
-                            <AvatarFallback>{user.email?.charAt(0).toUpperCase()}</AvatarFallback>
-                        </Avatar>
-                        <div className="text-sm text-muted-foreground">
-                            <div>{user.email}</div>
-                            <div className="mt-1">UID: {user.uid}</div>
-                        </div>
+                    <ProfilePictureUpload />
+                    <div className="text-sm text-muted-foreground">
+                        <div className="mt-1">{user.email}</div>
+                        <div className="mt-1">UID: {user.uid}</div>
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="displayName">Display name</Label>
@@ -91,4 +87,3 @@ export default function ProfilePage() {
         </div>
     );
 }
-
