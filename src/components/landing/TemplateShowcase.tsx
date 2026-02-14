@@ -5,6 +5,11 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/hooks/useAuth";
+import { useToast } from "@/components/ui/use-toast";
+import { createCV } from "@/lib/firebase/firestore";
 
 const templates = [
     {
@@ -45,6 +50,28 @@ const templates = [
 ];
 
 export default function TemplateShowcase() {
+    const { user } = useAuth();
+    const router = useRouter();
+    const { toast } = useToast();
+    const [creatingFor, setCreatingFor] = useState<string | null>(null);
+
+    const handleUseTemplate = async (templateId: string) => {
+        if (!user) {
+            toast({ title: "Please sign in", description: "Log in to start with a template." });
+            router.push("/login");
+            return;
+        }
+        try {
+            setCreatingFor(templateId);
+            const cvId = await createCV(user.uid, templateId);
+            router.push(`/editor/${cvId}`);
+        } catch (e) {
+            toast({ title: "Could not start editor", description: "Please try again shortly." });
+        } finally {
+            setCreatingFor(null);
+        }
+    };
+
     return (
         <section className="container py-8 md:py-12 lg:py-24">
             <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
@@ -87,7 +114,13 @@ export default function TemplateShowcase() {
                                 <p className="text-sm text-muted-foreground">{template.description}</p>
                             </CardContent>
                             <CardFooter>
-                                <Button className="w-full">Use Template</Button>
+                                <Button
+                                    className="w-full"
+                                    onClick={() => handleUseTemplate(template.id)}
+                                    disabled={creatingFor === template.id}
+                                >
+                                    {creatingFor === template.id ? "Starting..." : "Use Template"}
+                                </Button>
                             </CardFooter>
                         </Card>
                     </motion.div>
